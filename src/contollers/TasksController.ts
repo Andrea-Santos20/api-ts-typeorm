@@ -1,15 +1,14 @@
 import { Request, Response } from 'express';
-import { Tasks } from '../entities/Tasks';
 import { TaskRepository } from '../repositorie/taskRepository';
 
 
 export class TasksController {
-    mock: any;
     async createTask(req: Request, res: Response) {
-        const  description:Tasks  = req.body
-        
+        const description  = req.body
+         console.log(req.body)
+       
         if (!description) {
-            return res.status(400).json({ message: 'O titulo é obrigatório' })
+            return res.status(400).json({ message: 'O título é obrigatório' })
         }
 
         try {
@@ -24,10 +23,10 @@ export class TasksController {
         }
     }
 
-    async task(req: Request, res: Response) {
+    async list(req: Request, res: Response) {
         try {
             const task = await TaskRepository.find()
-            console.log(task)
+            // console.log(task)
             return res.json(task)
         } catch (error) {
             console.log(error)
@@ -35,8 +34,10 @@ export class TasksController {
         }
     }
 
-    async title(req: Request, res: Response) {
-       return res.status(500).json({ message: 'Internal Sever Error' })
+    async test(req: Request, res: Response) {
+        // console.log("index")
+        return res.status(500).json({ message: 'Internal Sever Error' })
+
     }
 
     async getById(req: Request, res: Response) {

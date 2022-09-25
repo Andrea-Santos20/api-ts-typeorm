@@ -2,6 +2,12 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeor
 
 @Entity({ name: "tasks" })
 export class Tasks {
+    // static save(newRoom: void) {
+    //     throw new Error('Method not implemented.');
+    // }
+    // static create(arg0: { name: any; description: any; }) {
+    //     throw new Error('Method not implemented.');
+    // }
 
     @PrimaryGeneratedColumn()
     id: number;
