@@ -1,18 +1,24 @@
 import { Request, Response } from 'express';
 import { TaskRepository } from '../repositorie/taskRepository';
+import { TaskCreate } from '../interfaces/TasksTypes';
 
 
 export class TasksController {
-    async createTask(req: Request, res: Response) {
-        const description  = req.body
-         console.log(req.body)
-       
+    async createTask(req: TaskCreate, res: Response) {
+        const { title, description } = req.body
+              
         if (!description) {
             return res.status(400).json({ message: 'O título é obrigatório' })
         }
 
+        // if (!req.body.description) {
+        //     return res.status(400).json({ message: 'O título é obrigatório' })
+        // }
+
         try {
-            const newTask = TaskRepository.create( description )
+            const newTask = TaskRepository.create({ title, description })
+
+            // const newTask = TaskRepository.create( req.body )
 
             await TaskRepository.save(newTask)
 
@@ -26,7 +32,7 @@ export class TasksController {
     async list(req: Request, res: Response) {
         try {
             const task = await TaskRepository.find()
-            // console.log(task)
+            
             return res.json(task)
         } catch (error) {
             console.log(error)
@@ -34,15 +40,9 @@ export class TasksController {
         }
     }
 
-    async test(req: Request, res: Response) {
-        // console.log("index")
-        return res.status(500).json({ message: 'Internal Sever Error' })
-
-    }
-
     async getById(req: Request, res: Response) {
         const task_id  = req.params.id;
-console.log(task_id);
+        console.log(task_id);
 
         try {
             const task = await TaskRepository.findOneBy({ id: Number(task_id) })
@@ -61,7 +61,7 @@ console.log(task_id);
     async updateTask(req: Request, res: Response) {
         try {
             const task = req.body;
-            console.log(req.params.id)
+            
             await TaskRepository.update( req.params.id, task);
             res.status(200).json({ message: "Tarefa do id " + req.params.id + " foi atualizada." });
 
