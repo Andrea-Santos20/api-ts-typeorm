@@ -1,7 +1,7 @@
 import app from './index'
 
 
-const PORT = process.env.PORT || 3003
+const PORT = process.env.PORT || 3333
 
 
 
